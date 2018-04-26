@@ -1,5 +1,10 @@
 package channels
 
+import (
+    "runtime"
+    "sync"
+)
+
 // FAN OUT
 numFinders := runtime.NumCPU()
 finders := make([]<-chan int, numFinders)
@@ -8,7 +13,7 @@ for i := 0; i < numFinders; i++ {
 }
 
 // FAN IN
-fanIn := func(
+fanIn := func (
 	done <-chan interface{},
 	channels ...<-chan interface{},
 ) <-chan interface{} {
@@ -41,4 +46,4 @@ fanIn := func(
 		close(multiplexedStream)
 	}()
 
-return multiplexedStream
+  return multiplexedStream
